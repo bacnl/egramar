@@ -1,0 +1,24 @@
+extends layout
+
+block content
+	h1=title
+	ul.errors
+		if errors
+			each error, i in errors
+				li.alert.alert-danger #{error.msg}
+	form(method='post', action='/theories/add', enctype="multipart/form-data")
+		.form-group
+			label Title:
+			input.form-control(name='title', type='text')
+		.form-group
+			label Unit
+			select.form-control(name='unitid')
+				each unit, i in units
+					option(value='#{unit._id}') #{unit.name}
+		.form-group
+			label Detail
+			textarea.form-control(name='body', id='body')
+		input.btn.btn-default(name='submit',type='submit',value='Save')
+		script(src='/ckeditor/ckeditor.js')
+		script
+			| CKEDITOR.replace('body');
